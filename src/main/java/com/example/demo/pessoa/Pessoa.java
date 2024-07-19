@@ -20,7 +20,7 @@ public class Pessoa {
 
     private int score;
 
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Conta conta;
 
     public Pessoa() {
