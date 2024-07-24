@@ -1,4 +1,5 @@
-package com.example.demo.pessoa;
+package com.example.demo.pessoa.repository;
+import com.example.demo.pessoa.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;

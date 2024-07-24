@@ -1,6 +1,7 @@
-package com.example.demo.conta;
-import com.example.demo.pessoa.PessoaRepository;
-import com.example.demo.pessoa.PessoaService;
+package com.example.demo.conta.controller;
+import com.example.demo.conta.entity.Conta;
+import com.example.demo.conta.service.ContaService;
+import com.example.demo.pessoa.repository.PessoaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

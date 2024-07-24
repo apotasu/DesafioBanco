@@ -1,5 +1,7 @@
-package com.example.demo.pessoa;
+package com.example.demo.pessoa.service;
 
+import com.example.demo.pessoa.Pessoa;
+import com.example.demo.pessoa.repository.PessoaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

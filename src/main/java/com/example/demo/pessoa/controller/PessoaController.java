@@ -1,4 +1,6 @@
-package com.example.demo.pessoa;
+package com.example.demo.pessoa.controller;
+import com.example.demo.pessoa.Pessoa;
+import com.example.demo.pessoa.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

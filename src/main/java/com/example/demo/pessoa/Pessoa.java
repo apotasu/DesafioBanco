@@ -1,15 +1,13 @@
 package com.example.demo.pessoa;
 
-import com.example.demo.conta.Conta;
+import com.example.demo.conta.entity.Conta;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import java.util.Random;
@@ -30,8 +28,7 @@ public class Pessoa {
 
     private int score;
 
-    @OneToOne
-    @JoinColumn(name = "pessoa_id")
+    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL)
     private Conta conta;
 
 

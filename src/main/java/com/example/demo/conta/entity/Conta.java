@@ -1,7 +1,8 @@
-package com.example.demo.conta;
+package com.example.demo.conta.entity;
 
-import com.example.demo.cartao.CartaoCredito;
-import com.example.demo.cheque.ChequeEspecial;
+import com.example.demo.cartao.entity.CartaoCredito;
+import com.example.demo.cheque.entity.ChequeEspecial;
+import com.example.demo.conta.TipoEnum;
 import com.example.demo.pessoa.Pessoa;
 import com.example.demo.pessoa.PessoaEnum;
 import jakarta.persistence.CascadeType;
@@ -9,6 +10,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 
 import java.util.Random;
@@ -29,13 +31,14 @@ public class Conta {
     private String documento;
 
     @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
-    private Pessoa pessoa;
-    @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
     private ChequeEspecial chequeEspecial;
 
     @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
     private CartaoCredito cartaoCredito;
 
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
+    private Pessoa pessoa;
     public Conta() {
     }
 
@@ -45,16 +48,13 @@ public class Conta {
 
     }
 
-    public Conta(String agencia, String documento) {
-        this.agencia = agencia;
-        this.numero = String.format("%06d", new Random().nextInt(1000000));
-    }
-
     public Conta(String agencia, String documento, Pessoa pessoa) {
         this.agencia = agencia;
         this.numero = String.format("%06d", new Random().nextInt(1000000));
+        this.documento = documento;
         this.pessoa = pessoa;
     }
+
 
 
     public void setTipoConta(PessoaEnum tipo) {
