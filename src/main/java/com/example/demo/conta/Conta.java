@@ -4,7 +4,13 @@ import com.example.demo.cartao.CartaoCredito;
 import com.example.demo.cheque.ChequeEspecial;
 import com.example.demo.pessoa.Pessoa;
 import com.example.demo.pessoa.PessoaEnum;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToOne;
+
 import java.util.Random;
 
 @Entity
@@ -20,10 +26,10 @@ public class Conta {
 
     private TipoEnum tipoConta;
 
-    @OneToOne
-    @JoinColumn(name = "documento", referencedColumnName = "documento")
-    private Pessoa pessoa;
+    private String documento;
 
+    @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
+    private Pessoa pessoa;
     @OneToOne(mappedBy = "conta", cascade = CascadeType.ALL)
     private ChequeEspecial chequeEspecial;
 
@@ -39,36 +45,17 @@ public class Conta {
 
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getNumero() {
-        return numero;
-    }
-
-    public void setNumero(String numero) {
-        this.numero = numero;
-    }
-
-    public String getAgencia() {
-        return agencia;
-    }
-
-    public void setAgencia(String agencia) {
+    public Conta(String agencia, String documento) {
         this.agencia = agencia;
+        this.numero = String.format("%06d", new Random().nextInt(1000000));
     }
 
-    public TipoEnum getTipoConta() {
-        return tipoConta;
-    }
-    public void setPessoa(Pessoa pessoa){
+    public Conta(String agencia, String documento, Pessoa pessoa) {
+        this.agencia = agencia;
+        this.numero = String.format("%06d", new Random().nextInt(1000000));
         this.pessoa = pessoa;
     }
+
 
     public void setTipoConta(PessoaEnum tipo) {
         if(tipo == PessoaEnum.PF){
@@ -78,4 +65,25 @@ public class Conta {
         }
     }
 
+    public void setDocumento(String documento) {
+        this.documento = documento;
+    }
+
+    public void setLimites(ChequeEspecial chequeEspecial, CartaoCredito cartaoCredito){
+        this.chequeEspecial = chequeEspecial;
+        this.cartaoCredito = cartaoCredito;
+    }
+
+    @Override
+    public String toString() {
+        return "Conta{" +
+                "id=" + id +
+                ", numero='" + numero + '\'' +
+                ", agencia='" + agencia + '\'' +
+                ", tipoConta=" + tipoConta +
+                ", documento='" + documento + '\'' +
+                ", chequeEspecial=" + chequeEspecial +
+                ", cartaoCredito=" + cartaoCredito +
+                '}';
+    }
 }

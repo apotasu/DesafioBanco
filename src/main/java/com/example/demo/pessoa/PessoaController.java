@@ -1,6 +1,14 @@
 package com.example.demo.pessoa;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 
 import java.util.List;
 
@@ -12,8 +20,8 @@ public class PessoaController {
     private PessoaService pessoaService;
 
     @PostMapping
-    public Pessoa addNewPessoa(@RequestBody Pessoa pessoa, @RequestParam String agencia) {
-        return pessoaService.addNewPessoa(pessoa, agencia);
+    public void addNewPessoa(@RequestBody Pessoa pessoa) {
+        pessoaService.addNewPessoa(pessoa);
     }
 
     @GetMapping
@@ -28,8 +36,8 @@ public class PessoaController {
     //Put -> Patch
     //@RequestParam -> RequestBody
     @PatchMapping(path = "{pessoaId}")
-    public void updateInfoPessoa(@PathVariable("pessoaId") Long pessoaId, @RequestBody(required = false) String name, @RequestBody(required = false) String documento){
-        pessoaService.updateInfoPessoa(pessoaId, name, documento);
+    public void updateInfoPessoa(@PathVariable("pessoaId") Long pessoaId, @RequestBody Pessoa pessoa){
+        pessoaService.updateInfoPessoa(pessoaId, pessoa.getNome(), pessoa.getDocumento());
     }
 
 }

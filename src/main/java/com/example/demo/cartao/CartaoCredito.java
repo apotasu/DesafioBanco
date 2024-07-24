@@ -1,7 +1,13 @@
 package com.example.demo.cartao;
 
 import com.example.demo.conta.Conta;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+
 
 @Entity
 public class CartaoCredito {
@@ -17,6 +23,10 @@ public class CartaoCredito {
     private Conta conta;
 
     public CartaoCredito() {
+    }
+
+    public CartaoCredito(double limite) {
+        this.limite = limite;
     }
 
     public CartaoCredito(double limite, Conta conta) {
@@ -46,5 +56,17 @@ public class CartaoCredito {
 
     public void setConta(Conta conta) {
         this.conta = conta;
+    }
+
+    public CartaoCredito updateLimiteCartaoCredito(int score){
+        CartaoCredito cartaoCredito = new CartaoCredito();
+        if (score >= 2 && score <= 5) {
+            cartaoCredito =new CartaoCredito(200.0);
+        } else if (score >= 6 && score <= 8) {
+            cartaoCredito = new CartaoCredito(2000.0);
+        } else if (score == 9) {
+            cartaoCredito = new CartaoCredito(15000.0);
+        }
+        return cartaoCredito;
     }
 }

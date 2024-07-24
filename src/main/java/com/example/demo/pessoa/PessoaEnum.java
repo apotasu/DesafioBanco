@@ -1,7 +1,5 @@
 package com.example.demo.pessoa;
 
-import com.example.demo.conta.TipoEnum;
-
 public enum PessoaEnum {
     PF("1"), PJ("2");
     private final String id;

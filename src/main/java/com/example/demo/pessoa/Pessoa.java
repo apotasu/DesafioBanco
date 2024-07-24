@@ -1,7 +1,17 @@
 package com.example.demo.pessoa;
 
 import com.example.demo.conta.Conta;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+
 import java.util.Random;
 
 @Entity
@@ -20,8 +30,10 @@ public class Pessoa {
 
     private int score;
 
-    @OneToOne(mappedBy = "pessoa", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToOne
+    @JoinColumn(name = "pessoa_id")
     private Conta conta;
+
 
     public Pessoa() {
         this.score = new Random().nextInt(10);
@@ -37,14 +49,17 @@ public class Pessoa {
         }
         this.score = new Random().nextInt(10);
     }
-
-    public Long getId() {
-        return id;
+    public Pessoa(String nome, String documento){
+        this.nome = nome;
+        this.documento = documento;
+        if(documento.length()==11){
+            this.tipo=PessoaEnum.PF;
+        } else {
+            this.tipo=PessoaEnum.PJ;
+        }
+        this.score = new Random().nextInt(10);
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -58,8 +73,12 @@ public class Pessoa {
         return tipo;
     }
 
-    public void setTipo(PessoaEnum tipo) {
-        this.tipo = tipo;
+    public void updateTipo(String documento) {
+        if(documento.length()==11){
+            this.tipo=PessoaEnum.PF;
+        } else {
+            this.tipo=PessoaEnum.PJ;
+        }
     }
 
     public String getDocumento() {
@@ -70,19 +89,12 @@ public class Pessoa {
         this.documento = documento;
     }
 
+
+    public Long getId() {
+        return id;
+    }
+
     public int getScore() {
         return score;
-    }
-
-    public void setScore(int score) {
-        this.score = score;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
     }
 }

@@ -9,6 +9,8 @@ import java.util.Optional;
     public interface PessoaRepository extends JpaRepository<Pessoa, Long> {
         @Query("SELECT p FROM Pessoa p WHERE p.documento = ?1")
     Optional<Pessoa> findPessoaByDocumento(String documento);
+        @Query("SELECT p FROM Pessoa p WHERE p.id=?1")
+        Pessoa findPessoasById(Long id);
 
     }
 
