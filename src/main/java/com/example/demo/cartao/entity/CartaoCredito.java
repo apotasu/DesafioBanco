@@ -33,4 +33,8 @@ public class CartaoCredito {
         this.limite = limite;
         this.conta = conta;
     }
+
+    public double getLimite() {
+        return limite;
+    }
 }

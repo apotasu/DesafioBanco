@@ -1,6 +1,7 @@
-package com.example.demo.pessoa;
+package com.example.demo.pessoa.entity;
 
 import com.example.demo.conta.entity.Conta;
+import com.example.demo.pessoa.PessoaEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -39,10 +40,12 @@ public class Pessoa {
         this.nome = nome;
         this.documento = documento;
         this.id = id;
-        if(documento.length()==11){
-            this.tipo=PessoaEnum.PF;
-        } else {
-            this.tipo=PessoaEnum.PJ;
+        switch (documento.length()){
+            case 11: this.tipo=PessoaEnum.PF;
+            break;
+            case 14:this.tipo=PessoaEnum.PJ;
+            break;
+            default: throw new IllegalStateException("Documento inserido invalido");
         }
         this.score = new Random().nextInt(10);
     }
@@ -93,5 +96,9 @@ public class Pessoa {
 
     public int getScore() {
         return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }

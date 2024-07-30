@@ -1,6 +1,6 @@
 package com.example.demo.pessoa.config;
 
-import com.example.demo.pessoa.Pessoa;
+import com.example.demo.pessoa.entity.Pessoa;
 import com.example.demo.pessoa.service.PessoaService;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

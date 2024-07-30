@@ -32,9 +32,9 @@ public class ContaController {
     public List<Conta> getContas(){
         return contaService.getContas();
     }
-    @DeleteMapping(path = "{pessoaId}")
-    public void deleteAnPessoa(@PathVariable("pessoaId") Long pessoaId){
-        contaService.deletePessoa(pessoaId);
+    @DeleteMapping(path = "{contaId}")
+    public void deleteAnAccount(@PathVariable("contaId") Long contaId){
+        contaService.deleteAccount(contaId);
     }
 
 }

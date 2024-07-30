@@ -1,5 +1,5 @@
 package com.example.demo.pessoa.controller;
-import com.example.demo.pessoa.Pessoa;
+import com.example.demo.pessoa.entity.Pessoa;
 import com.example.demo.pessoa.service.PessoaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,6 +29,10 @@ public class PessoaController {
     @GetMapping
     public List<Pessoa> getPessoa(){
         return pessoaService.getPessoa();
+    }
+    @GetMapping(path = "{pessoaId}")
+    public Pessoa getPessoaById(@PathVariable("pessoaId") Long pessoaId){
+        return pessoaService.getPessoaById(pessoaId);
     }
     @DeleteMapping(path = "{pessoaId}")
     public void deleteAnPessoa(@PathVariable("pessoaId") Long pessoaId){

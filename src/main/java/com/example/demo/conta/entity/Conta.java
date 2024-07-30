@@ -3,7 +3,7 @@ package com.example.demo.conta.entity;
 import com.example.demo.cartao.entity.CartaoCredito;
 import com.example.demo.cheque.entity.ChequeEspecial;
 import com.example.demo.conta.TipoEnum;
-import com.example.demo.pessoa.Pessoa;
+import com.example.demo.pessoa.entity.Pessoa;
 import com.example.demo.pessoa.PessoaEnum;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
@@ -72,6 +72,58 @@ public class Conta {
     public void setLimites(ChequeEspecial chequeEspecial, CartaoCredito cartaoCredito){
         this.chequeEspecial = chequeEspecial;
         this.cartaoCredito = cartaoCredito;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
+    }
+
+    public String getAgencia() {
+        return agencia;
+    }
+
+    public void setAgencia(String agencia) {
+        this.agencia = agencia;
+    }
+
+    public TipoEnum getTipoConta() {
+        return tipoConta;
+    }
+
+    public void setTipoConta(TipoEnum tipoConta) {
+        this.tipoConta = tipoConta;
+    }
+
+    public String getDocumento() {
+        return documento;
+    }
+
+    public ChequeEspecial getChequeEspecial() {
+        return chequeEspecial;
+    }
+
+    public void setChequeEspecial(ChequeEspecial chequeEspecial) {
+        this.chequeEspecial = chequeEspecial;
+    }
+
+    public CartaoCredito getCartaoCredito() {
+        return cartaoCredito;
+    }
+
+    public void setCartaoCredito(CartaoCredito cartaoCredito) {
+        this.cartaoCredito = cartaoCredito;
+    }
+
+    public Pessoa getPessoa() {
+        return pessoa;
+    }
+
+    public void setPessoa(Pessoa pessoa) {
+        this.pessoa = pessoa;
     }
 
     @Override

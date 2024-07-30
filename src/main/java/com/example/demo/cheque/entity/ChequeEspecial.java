@@ -34,4 +34,7 @@ public class ChequeEspecial {
         this.conta = conta;
     }
 
+    public double getLimite() {
+        return limite;
+    }
 }
