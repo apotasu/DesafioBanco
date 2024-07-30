@@ -6,6 +6,8 @@ import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,15 +27,17 @@ public class PessoaService {
         return pessoas;
     }
 
-    public void addNewPessoa(Pessoa pessoa) {
+    public ResponseEntity<Void> addNewPessoa(Pessoa pessoa) {
         Optional<Pessoa> optionalPessoa = pessoaRepository.findPessoaByDocumento(pessoa.getDocumento());
         if (optionalPessoa.isPresent()) {
             logger.error("Tentativa de adicionar pessoa com documento já cadastrado: {}", pessoa.getDocumento());
+            //return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
             throw new IllegalStateException("Documento já cadastrado");
         }
         pessoa.updateTipo(pessoa.getDocumento());
         pessoaRepository.save(pessoa);
         logger.info("Nova pessoa adicionada com sucesso: {}", pessoa);
+        return ResponseEntity.ok().build();
     }
 
     public void deletePessoa(Long pessoaId) {

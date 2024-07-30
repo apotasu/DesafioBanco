@@ -1,4 +1,4 @@
-package testes.pessoa.entity;
+package com.example.demo.pessoa.entity;
 
 import com.example.demo.pessoa.entity.Pessoa;
 
@@ -22,6 +22,11 @@ class TestsPessoaEntity {
 	void testNewPessoaCNPJ_whenValidValuesProvided(){
 		Pessoa pessoa = new Pessoa("Chris", "12345678901234");
 		Assert.notNull(pessoa, "Documento com length correto retornou erro");
+	}
+	@Test
+	void testNewPessoa_whenInvalidValuesProvided(){
+		Pessoa pessoa = new Pessoa("Chris", "123456789");
+		Assert.hasText(pessoa.getDocumento(), "Documento com length correto retornou erro");
 	}
 
 }
