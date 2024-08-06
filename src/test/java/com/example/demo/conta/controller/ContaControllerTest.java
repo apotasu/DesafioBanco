@@ -1,12 +1,16 @@
 package com.example.demo.conta.controller;
 
+import com.example.demo.conta.entity.Conta;
 import com.example.demo.conta.service.ContaService;
+import com.example.demo.pessoa.entity.Pessoa;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @ExtendWith(MockitoExtension.class)
 class ContaControllerTest {
@@ -16,25 +20,23 @@ class ContaControllerTest {
     @InjectMocks
     ContaController contaController;
 
-    @Nested
-    class getContas{
         @Test
-        void shouldReturnHttpOk() {
-            //ARRANGE - Prepara para a execucação os mocks
+        void shouldCreateAccount_WhenValidPessoaProvided() {
+            Pessoa pessoa = new Pessoa("Mario","12345678901");
+            Conta conta = new Conta("0324", pessoa.getDocumento(),pessoa);
 
-            //ACT - Executar metodo a ser testado
-            contaController.getContas();
-            //ASSERT - Verifica se a execução foi correta
+            contaController.createAccount(pessoa.getId(), conta.getAgencia());
 
+            assertEquals(1,contaController.getContas().size(), "Deve ter criado a conta");
         }
         @Test
-        void shouldPassCorrectParameterToService() {
+        void shouldNotAddPessoa_WhenInvalidPessoaProvided() {
+            Pessoa pessoa = new Pessoa("Mario","1234568901");
+            Conta conta = new Conta("0324", pessoa.getDocumento(),pessoa);
 
-        }
-        @Test
-        void shouldReturnResponeBodyCorrectly() {
+            contaController.createAccount(pessoa.getId(), conta.getAgencia());
 
+            assertEquals(0,contaController.getContas().size(), "Não deve ter criado a conta");
         }
     }
 
-}

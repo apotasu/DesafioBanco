@@ -8,10 +8,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.util.Assert;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,13 +31,6 @@ class TestsPessoaService {
         MockitoAnnotations.openMocks(this);
     }
 
-    @Test
-    void shouldReturnHttpOk_WhenPessoaIsAddedSuccessfully() {
-        Pessoa pessoa = new Pessoa("Maria", "94510283040");
-        when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
-        ResponseEntity<Void> response = pessoaService.addNewPessoa(pessoa);
-        assertEquals(HttpStatus.OK, response.getStatusCode());
-    }
 
     @Test
     void shouldAddAndGetPessoa_WhenValidValuesProvided() {
@@ -62,31 +53,20 @@ class TestsPessoaService {
     }
 
     @Test
-    void shouldReturnEmpty_WhenInvalidValuesProvided() {
-        Pessoa pessoa = new Pessoa();
-        when(pessoaRepository.save(pessoa)).thenReturn(null);
-        when(pessoaRepository.findAll()).thenReturn(Collections.emptyList());
-        pessoaService.addNewPessoa(pessoa);
-        var pessoas = pessoaService.getPessoa();
-        assertTrue(pessoas.isEmpty(), "Repository deve estar vazio");
-    }
-
-    @Test
     void shouldDeletePessoa_WhenValidIdProvided() {
         Pessoa pessoa = new Pessoa("Chris", "12345678901234");
-        when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
-        when(pessoaRepository.findById(1L)).thenReturn(Optional.of(pessoa));
         pessoaService.addNewPessoa(pessoa);
         pessoaService.deletePessoa(1L);
-        verify(pessoaRepository, times(1)).deleteById(1L);
+        assertEquals(0, pessoaService.getPessoa().size());
     }
 
     @Test
     void shouldNotFindPessoa_WhenInvalidIdProvidedAfterDeletion() {
         Pessoa pessoa = new Pessoa("Chris", "12345678901234");
-        when(pessoaRepository.save(pessoa)).thenReturn(pessoa);
         when(pessoaRepository.findById(1L)).thenReturn(Optional.of(pessoa));
         when(pessoaRepository.findById(999L)).thenReturn(Optional.empty());
+        //Pessoa nunca é salva no repository
+        //why
         pessoaService.addNewPessoa(pessoa);
         pessoaService.deletePessoa(1L);
         Optional<Pessoa> retrievedPessoa = Optional.ofNullable(pessoaService.getPessoaById(999L));

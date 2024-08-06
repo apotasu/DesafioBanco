@@ -2,17 +2,11 @@ package com.example.demo.pessoa.controller;
 
 import com.example.demo.pessoa.entity.Pessoa;
 import com.example.demo.pessoa.service.PessoaService;
-import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.util.Assert;
-
-import java.net.http.HttpResponse;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.doReturn;
@@ -25,31 +19,35 @@ class PessoaControllerTest {
     @InjectMocks
     PessoaController pessoaController;
 
-    @Nested
-    class getContas{
-        @Test
-        void shouldReturnHttpOk() {
-            //ARRANGE - Prepara para a execucação os mocks
-            Pessoa pessoa = new Pessoa("Mario", "86186704321");
-
-            doReturn(null).when(pessoaService).addNewPessoa(pessoa);
-            //ACT - Executar metodo a ser testado
-            //var response = pessoaController.addNewPessoa(pessoa);
-            //ASSERT - Verifica se a execução foi correta
-
-            //HttpResponse httpResp = ;
-            //int code = httpResp.getStatusLine().getStatusCode();
-
-            //assertEquals(HttpStatusCode.valueOf(200), );
-        }
-        @Test
-        void shouldPassCorrectParameterToService() {
-
-        }
-        @Test
-        void shouldReturnResponeBodyCorrectly() {
-
-        }
+    @Test
+    void shouldAddPessoa_WhenValidPessoaProvided() {
+        Pessoa pessoa = new Pessoa("Mario", "86186704321");
+        doReturn(true).when(pessoaService).addNewPessoa(pessoa);
+        pessoaController.addNewPessoa(pessoa);
+        assertEquals(1, pessoaController.getPessoa().size(), "A pessoa deve ter sido adicionada");
     }
 
+    @Test
+    void shouldNotAddPessoa_WhenInvalidPessoaProvided() {
+        Pessoa pessoa = new Pessoa("Mario", "861867321");
+        doReturn(false).when(pessoaService).addNewPessoa(pessoa);
+        pessoaController.addNewPessoa(pessoa);
+        assertEquals(0, pessoaController.getPessoa().size(), "A pessoa não deve ter sido adicionada");
+    }
+
+    @Test
+    void shouldAddPessoa_WhenValidBodyProvided() {
+        Pessoa pessoa = new Pessoa("Luigi", "12345678900");
+        doReturn(true).when(pessoaService).addNewPessoa(pessoa);
+        pessoaController.addNewPessoa(pessoa);
+        assertEquals(1, pessoaController.getPessoa().size(), "A pessoa deve ter sido adicionada");
+    }
+
+    @Test
+    void shouldReturnResponseBodyCorrectly() {
+        Pessoa pessoa = new Pessoa("Peach", "98765432100");
+        doReturn(pessoa).when(pessoaService).getPessoaById(1L);
+        Pessoa response = pessoaController.getPessoaById(1L);
+        assertEquals(pessoa, response, "O corpo da resposta deve estar correto");
+    }
 }

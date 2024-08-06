@@ -16,6 +16,8 @@ import org.springframework.util.Assert;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -34,16 +36,16 @@ class TestsContaService {
 
     @Test
     void testCreateAccount_WhenValidPessoaProvided() {
-        Pessoa pessoa = new Pessoa();
-        pessoa.setScore(3);
+        Pessoa pessoa = new Pessoa("Peach", "12345678901");
         Conta conta = new Conta();
         conta.setPessoa(pessoa);
 
         when(contaRepository.save(any(Conta.class))).thenReturn(conta);
 
+        //A conta nunca é criada?
         contaService.createAccount(pessoa, "0001");
 
-        verify(contaRepository).save(any(Conta.class));
+        assertEquals(1, contaService.getContas().size(), "A conta deve ser criada");
     }
 
     @Test
@@ -52,7 +54,7 @@ class TestsContaService {
         when(contaRepository.findAll()).thenReturn(retrievedConta);
 
         List<Conta> contas = contaService.getContas();
-        Assert.isTrue(contas.isEmpty(), "Repository não deve estar vazio");
+        Assert.isTrue(contas.isEmpty(), "Repository deve estar vazio");
     }
 
     @Test
